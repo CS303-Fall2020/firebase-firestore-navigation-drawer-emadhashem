@@ -5,4 +5,5 @@ export const TOGGLE_TODO = 'TOGGLE_TODO'
 export const RECEIV_TODO = 'RECEIV_TODO'
 export const LOAD_TODO = 'LOAD_TODO'
 export const SET_USER = 'SET_USER';
-export const RELOAD = 'RELOAD'
+export const RELOAD = 'RELOAD';
+export const GO_OUT = "GO_OUT";

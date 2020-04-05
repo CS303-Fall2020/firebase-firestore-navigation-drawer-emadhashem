@@ -13,7 +13,7 @@ import logger from './src/redux/middlewares/index'
 import rootReducer from './src/redux/reducers/index'
 import thunk from 'redux-thunk';
 import {applyMiddleware} from 'redux'
-import Home from './src/components/home'
+import HomeTodo from './src/components/HomeTodo'
 import Login from './src/components/authData/login'
 import SignUp from './src/components/authData/signUp'
 import Forget from './src/components/authData/forgetPass'
@@ -30,12 +30,9 @@ function App() {
                         <Stack.Screen name = "login" component = {Login}/>
                         <Stack.Screen name = "sign" component = {SignUp}/>
                         <Stack.Screen name = "forget" component = {Forget}/>
-                        <Stack.Screen name = "home" component = {Home}
+                        <Stack.Screen name = "hometodo" component = {HomeTodo}
                           options = {{
-                            headerLeft : () => <Button title = "signout" onPress = {() => {
-                              auth.signOut();
-                          }}/>,
-                          title : ''
+                            header : () => null
                             
                           }}
                         />

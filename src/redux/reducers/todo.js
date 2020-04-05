@@ -1,4 +1,4 @@
-import {ADD_TODO , REMOVE_TODO , UPDATE_TODO , TOGGLE_TODO , RECEIV_TODO} from '../constants'
+import {ADD_TODO , REMOVE_TODO , UPDATE_TODO , TOGGLE_TODO , RECEIV_TODO, GO_OUT} from '../constants'
 import {formatTodo} from '../../utils/helpers'
 const todos = (state = [] , action) => {
     switch(action.type) {
@@ -18,6 +18,7 @@ const todos = (state = [] , action) => {
             } else return item
         })
         case RECEIV_TODO : return [...action.todos]
+        case GO_OUT : return []
         default : return state
     }
 }

@@ -9,18 +9,29 @@ const SignUp = ({dispatch , navigation}) => {
     return (
         <View>
             <TextInput placeholder = "email" 
-            style ={{width : 200}} onChangeText = {t => setCur({...cur , email : t})}/>
+            
+            style ={{width : 200 , padding : 20}} onChangeText = {t => setCur({...cur , email : t})}
+            value = {cur.email}
+            />
 
             <TextInput passwordRules = "s" placeholder = "pass" 
-            style ={{width : 200}} onChangeText = {t => setCur({...cur , pass : t})}/>
-            <TextInput passwordRules = "s" placeholder = "pass" 
-            style ={{width : 200}} onChangeText = {t => setCur({...cur , pass1 : t})}/>
+            secureTextEntry = {true}
+            style ={{width : 200 , padding : 20}} onChangeText = {t => setCur({...cur , pass : t})}
+            value = {cur.pass}
+            />
+            <TextInput passwordRules = "s" placeholder = "conifirm pass" 
+            secureTextEntry = {true}
+            style ={{width : 200, padding : 20}} onChangeText = {t => setCur({...cur , pass1 : t})}
+            value = {cur.pass1}
+            />
+
             <Button title = "signup" onPress = {() => {
                if(cur.pass === cur.pass1) {
                     auth.createUserWithEmailAndPassword(cur.email , cur.pass + "")
                     .then(() => {
                         dispatch(setUser({name : cur.email , pass : cur.pass + ""}));
-                        navigation.navigate('home')
+                        navigation.navigate('hometodo')
+                        setCur({email : '' , pass : '' , pass1 : ''})
                     })
                     .catch(e => alert(e))
                }else alert('pasword error')

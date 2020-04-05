@@ -21,8 +21,11 @@ if (!global.atob) { global.atob = decode }
 const Todo = ({navigation , load , dispatch , todos , user}) => {
     const [inp  , setInp] = useState('')
     const getCur = (id , text) => {
-        navigation.navigate('det' , {id , text});
+        navigation.navigate('Detailes' , {id , text});
     } 
+    useEffect(() => {
+        dispatch(handleInitData(user , todos));
+    }, [user.name])
     // console.warn(load)
     if(load) return <ActivityIndicator size="large" color="#0000ff" />
     else 

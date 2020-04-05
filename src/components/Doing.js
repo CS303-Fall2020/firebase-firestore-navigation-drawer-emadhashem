@@ -1,8 +1,8 @@
 import React from 'react'
 import {View, Button, Text, StyleSheet} from 'react-native';
 import { connect } from 'react-redux';
-import {toggleToto} from '../redux/actions/todo'
-const Doing = ({ text , id , con , dispatch , getCur = f => f,}) => {
+import {toggleToto, handleToggleTodo} from '../redux/actions/todo'
+const Doing = ({ text , id , con , dispatch , getCur = f => f, user , todos}) => {
     const txtSty = () => ({
         textDecorationLine : (con) ? "line-through" : 'none'
     })
@@ -12,7 +12,7 @@ const Doing = ({ text , id , con , dispatch , getCur = f => f,}) => {
                     getCur();
                 }}/>
                 <Text style = {[styles.txt , txtSty()]}>{text}</Text>
-                <Button title = "done" onPress = {() => dispatch(toggleToto(id))}/>
+                <Button title = "done" onPress = {() => dispatch(handleToggleTodo(id , todos , user))}/>
         </View>
     )
 }
@@ -35,4 +35,10 @@ const styles = StyleSheet.create({
     }
     
 })
-export default connect()(Doing)
+const mapStateToProps = ({user , todos}) => {
+    return {
+        todos,
+        user
+    }
+}
+export default connect(mapStateToProps)(Doing)

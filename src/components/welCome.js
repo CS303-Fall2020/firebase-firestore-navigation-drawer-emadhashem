@@ -3,9 +3,7 @@ import { View , Text, Button , StyleSheet , StatusBar , TouchableOpacity} from '
 import {handleInitData} from '../redux/actions/shared'
 import { connect } from 'react-redux'
 const WelCome = ({navigation , dispatch , user , todos}) => {
-    useEffect(() => {
-        dispatch(handleInitData(user , todos));
-    }, [])
+    
     return (
         <View>
             <Button title = "go to todo" onPress = {() => navigation.navigate('todo')}/>

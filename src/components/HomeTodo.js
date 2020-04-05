@@ -1,51 +1,39 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator  } from '@react-navigation/stack';
+import {createDrawerNavigator  } from '@react-navigation/drawer';
 import WelCome from './welCome';
-import {StyleSheet , View , Text , TouchableOpacity , StatusBar} from 'react-native'
+import {StyleSheet , View , Text , TouchableOpacity , StatusBar, Button} from 'react-native'
 import Todo from './todo';
 import Detailes from './detailes';
-
-const Stack = createStackNavigator();
-const HomeTodo = ({navigation}) => {
+import { connect } from 'react-redux';
+import { handleInitData } from '../redux/actions/shared';
+import TodoSatck from './todoStack';
+import Profile from './profile'
+import { auth } from '../services/fireBase';
+const Drawer = createDrawerNavigator();
+const HomeTodo = ({navigation , user , dispatch , todos}) => {
+    
     return (
+        <Drawer.Navigator>
+            <Drawer.Screen name = "todoStack" component = {TodoSatck} />
+            <Drawer.Screen name = "profile" component = {Profile} 
+                options = {{
+                    drawerLabel : () =>  (
+                        <View style = {styles.label}>
+                            <Button title ="signout" onPress = {() => {
+                                auth.signOut()
+                                navigation.navigate('login') ; 
+                                dispatch(goOut());
+                            }}/> 
+                            <Text style = {styles.labelTxt}>profile</Text>
+                        </View>
+                    ),
+                    // drawerLabel : 'profile'
+
+                }}
+            />
+        </Drawer.Navigator>
         
-            <Stack.Navigator>
-                <Stack.Screen name = "welcome" component = {WelCome}
-                    options = {{
-                        headerLeft : 
-                            () => { return (
-                                            <TouchableOpacity style = {styles.toggleBtn} 
-                                                 onPress = {() => navigation.toggleDrawer()}>
-                                                <Text style = {styles.line}></Text>
-                                                <Text style = {styles.line}></Text>
-                                                <Text style = {styles.line}></Text>
-                                                
-                                            </TouchableOpacity>
-                                        )
-                            }
-                       
-                    }}
-                />
-                <Stack.Screen name = "todo" component = {Todo}
-                    options = {{
-                        headerLeft : 
-                            () => { return (
-                                            <TouchableOpacity style = {styles.toggleBtn} 
-                                                 onPress = {() => navigation.toggleDrawer()}>
-                                                <Text style = {styles.line}></Text>
-                                                <Text style = {styles.line}></Text>
-                                                <Text style = {styles.line}></Text>
-                                                
-                                            </TouchableOpacity>
-                                        )
-                            }
-                       
-                    }}
-                />
-                <Stack.Screen name = "det" component = {Detailes}/>
-            </Stack.Navigator>
-        // </NavigationContainer>
     )
 }
 const styles = StyleSheet.create({
@@ -65,6 +53,19 @@ const styles = StyleSheet.create({
         width : '70%',
         height : 5,
         backgroundColor : 'white'
+    },
+    label : {
+        flexDirection : "row",
+    },
+    labelTxt : {
+        fontSize : 20,
+        marginLeft : 10
     }
 })
-export default HomeTodo
+const mapStateToProps = ({user , todos}) => {
+    return {
+        user,
+        todos
+    }
+}
+export default connect(mapStateToProps)(HomeTodo);

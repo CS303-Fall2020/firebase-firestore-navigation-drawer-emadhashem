@@ -8,16 +8,21 @@ const Login = ({navigation , dispatch}) => {
     return (
         <View>
             <TextInput placeholder = "email" 
-            style ={{width : 200}} onChangeText = {t => setCur({...cur , email : t})}/>
+            style ={{width : 200 , padding : 20}} 
+            onChangeText = {t => setCur({...cur , email : t})} value = {cur.email}/>
 
             <TextInput passwordRules = "s" placeholder = "pass" 
-            style ={{width : 200}} onChangeText = {t => setCur({...cur , pass : t})}/>
+            secureTextEntry = {true}
+            style ={{width : 200 , padding : 20}} 
+            onChangeText = {t => setCur({...cur , pass : t})} value = {cur.pass}/>
+
             <Button title = "login" onPress = {() => {
 
                 auth.signInWithEmailAndPassword(cur.email , cur.pass + "")
                 .then(() => {
                     dispatch(setUser({name : cur.email , pass : cur.pass}));
-                    navigation.navigate('home')
+                    navigation.navigate('hometodo')
+                    setCur({email : '' , pass : ''})
                 })
                 .catch(e => alert(e))
                 
